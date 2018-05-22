@@ -24,9 +24,19 @@ namespace AutoOffice.Controllers
             db = injectedContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // 验证是否登陆
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return View();
+            }
+            else
+            {
+                ViewData["UserName"] = user.UserName;
+                return View();
+            }
         }
 
         public IActionResult About()

@@ -1,4 +1,10 @@
-﻿#message-detail {
+﻿#message-user-row td
+{
+    min-width: 10em;
+}
+
+
+#message-detail {
     margin-left: 10em;
     margin-right: 10em;
 }
@@ -6,3 +12,5 @@
 #to-time, #to-text {
     text-align: right;
 }
+
+

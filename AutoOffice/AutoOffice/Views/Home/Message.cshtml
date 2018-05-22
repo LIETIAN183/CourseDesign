@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Message";
 }
-
+<link href="~/css/message.css" rel="stylesheet" />
 <h2>Message</h2>
 
 <table>
@@ -22,18 +22,18 @@
     </tr>
     @foreach (var item in Model.HumanManages)
     {
-        <tr>
+        <tr id="message-user-row">
             <td>
-                @item.Email"
+                @item.Email
             </td>
             <td>
-                @item.Name"
+                @item.Name
             </td>
             <td>
-                @item.Department"
+                @item.Department
             </td>
             <td>
-                @item.Job"
+                @item.Job
             </td>
             <td>
                 <form id="form" asp-action="MessageDetail" method="post">
