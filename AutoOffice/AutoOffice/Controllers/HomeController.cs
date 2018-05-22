@@ -5,11 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AutoOffice.Models;
+using Microsoft.AspNetCore.Identity;
+using AutoOffice.Data;
+using AutoOffice.Models.HomeViewModels;
 
 namespace AutoOffice.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private ApplicationDbContext db;
+
+        public HomeController(
+          UserManager<ApplicationUser> userManager,
+          ApplicationDbContext injectedContext)
+        {
+            _userManager = userManager;
+            db = injectedContext;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -32,6 +46,53 @@ namespace AutoOffice.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // MARK: - 人事管理 HumanResourceManage
+        public async Task<IActionResult> HumanResourceManage()
+        {
+            // 验证是否登陆
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            var username = user.UserName;
+            // 验证是否登为管理用户
+            if (username != "root@root.com")
+            {
+                throw new ApplicationException($"You don't have this power, user {username}.");
+            }
+
+            var model = new HumanResourceManageModel
+            {
+                HumanManages = db.HumanManages.ToArray()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> HumanResourceManageSet(string email, string name, string department, string job)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            var username = user.UserName;
+            if (username != "root@root.com")
+            {
+                throw new ApplicationException($"You don't have this power, user {username}.");
+            }
+
+            HumanManage humanManageToUpdate = db.HumanManages.First(p => p.Email == email);
+            humanManageToUpdate.Name = name;
+            humanManageToUpdate.Job = job;
+            humanManageToUpdate.Department = department;
+            db.SaveChanges();
+
+            return View();
         }
     }
 }

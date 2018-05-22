@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using AutoOffice.Models;
+using AutoOffice.Models.HomeViewModels;
 
 namespace AutoOffice.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<HumanManage> HumanManages { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -20,6 +23,8 @@ namespace AutoOffice.Data
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
+            builder.Entity<HumanManage>().ToTable("HumanManage");
+
             // Add your customizations after calling base.OnModelCreating(builder);
         }
     }
