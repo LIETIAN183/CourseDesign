@@ -94,5 +94,71 @@ namespace AutoOffice.Controllers
 
             return View();
         }
+
+        // MARK: - 站内短信 Message 
+        public async Task<IActionResult> Message()
+        {
+            // 验证是否登陆
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new HumanResourceManageModel
+            {
+                HumanManages = db.HumanManages
+                                                .Where(h => h.Email != user.UserName)
+                                                .ToArray()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MessageDetail(string toEmail)
+        {
+            // 验证是否登陆
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new MessageModel
+            {
+                Messages = db.Messages
+                                    .Where(m => (m.FromEmail == toEmail && m.ToEmail == user.UserName) || (m.FromEmail == user.UserName && m.ToEmail == toEmail))
+                                    .OrderBy(m => m.Time)
+                                    .ToArray()
+            };
+
+            ViewData["UserName"] = user.UserName;
+            ViewData["toEmail"] = toEmail;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MessageSend(string toEmail, string text)
+        {
+            // 验证是否登陆
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            Message message = new Message();
+            message.FromEmail = user.UserName;
+            message.ToEmail = toEmail;
+            message.Text = text;
+            message.Time = DateTime.Now;
+            db.Messages.Add(message);
+            db.SaveChanges();
+
+            ViewData["toEmail"] = toEmail;
+
+            return View();
+        }
     }
 }
