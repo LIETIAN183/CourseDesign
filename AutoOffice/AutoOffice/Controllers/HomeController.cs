@@ -30,6 +30,7 @@ namespace AutoOffice.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
+                ViewData["UserName"] = "";
                 return View();
             }
             else

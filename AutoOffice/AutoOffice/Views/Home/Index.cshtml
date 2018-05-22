@@ -2,13 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 <link href="~/css/index.css" rel="stylesheet" />
-<div id="nav-button">
-    @if (ViewData["UserName"].ToString() == "root@root.com")
-    {
-        <a asp-action="HumanResourceManage">Manage Human Resource</a>
-    }
+@if (!ViewData["UserName"].Equals(""))
+{
+    <div id="nav-button">
+        @if (ViewData["UserName"].ToString() == "root@root.com")
+        {
+            <a asp-action="HumanResourceManage">Manage Human Resource</a>
+        }
 
-    <br />
+        <br />
 
-    <a asp-action="Message">Message</a>
-</div>
+        <a asp-action="Message">Message</a>
+    </div>
+}
+else
+{
+    <h5 style="margin: 10em">请先登陆后操作</h5>
+}
