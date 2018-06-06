@@ -171,5 +171,56 @@ namespace AutoOffice.Controllers
 
             return View();
         }
+
+
+    // MARK: - Job Remind
+    public async Task<IActionResult> JobRemind() {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+
+      var model = new JobRemindModel {
+        JobReminds = db.JobReminds
+                                          .Where(h => h.Email == user.UserName)
+                                          .ToArray()
+      };
+
+      ViewData["UserName"] = user.UserName;
+
+      return View(model);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> JobRemindAdd(string content) {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+      JobRemind jobRemind = new JobRemind();
+      jobRemind.Content = content;
+      jobRemind.Email = user.Email;
+      jobRemind.Finished = false;
+      db.JobReminds.Add(jobRemind);
+      db.SaveChanges();
+
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> JobRemindFinish(string id) {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+
+      db.JobReminds.Where(job => job.ID == id).First().Finished = true;
+      db.SaveChanges();
+
+      return View();
+    }
+  }
 }

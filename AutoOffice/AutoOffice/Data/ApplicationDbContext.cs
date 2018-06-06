@@ -13,8 +13,9 @@ namespace AutoOffice.Data
     {
         public DbSet<HumanManage> HumanManages { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<JobRemind> JobReminds { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
@@ -26,8 +27,9 @@ namespace AutoOffice.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             builder.Entity<HumanManage>().ToTable("HumanManage");
             builder.Entity<Message>().ToTable("Message");
+            builder.Entity<JobRemind>().ToTable("JobRemind");
 
-            // Add your customizations after calling base.OnModelCreating(builder);
-        }
+      // Add your customizations after calling base.OnModelCreating(builder);
+    }
     }
 }
