@@ -4,16 +4,16 @@
 <link href="~/css/index.css" rel="stylesheet" />
 @if (!ViewData["UserName"].Equals(""))
 {
-    <div id="nav-button">
-        @if (ViewData["UserName"].ToString() == "root@root.com")
-        {
-            <a asp-action="HumanResourceManage">Manage Human Resource</a>
-        }
+<div id="nav-button">
+    @if (ViewData["UserName"].ToString() == "root@root.com") {
+        <a asp-action="HumanResourceManage">Manage Human Resource</a>
+    }
 
-        <br />
+    <br />
 
-        <a asp-action="Message">Message</a>
-    </div>
+    <a asp-action="Message">Message</a>
+    <a asp-action="JobRemind">JobRemind</a>
+</div>
 }
 else
 {
