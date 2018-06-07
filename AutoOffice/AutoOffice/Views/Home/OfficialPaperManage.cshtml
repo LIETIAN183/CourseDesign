@@ -1,0 +1,46 @@
+﻿@using AutoOffice.Models.HomeViewModels;
+@model AutoOffice.Models.HomeViewModels.OfficialPaperModel
+@{
+    ViewData["Title"] = "OfficialPaperManage";
+}
+<link href="~/css/officialPaper.css" rel="stylesheet" />
+
+<h2>OfficialPaperManage</h2>
+
+<h4>收到</h4>
+
+@foreach (var officialPaper in Model.OfficialPapers) {
+    if (officialPaper.ToEmail == ViewData["UserName"].ToString()) {
+        <div id="from-official-paper">
+            <p id="from-email">@officialPaper.FromEmail</p>
+            <p id="from-time">@officialPaper.Time</p>
+            <p id="from-title">@officialPaper.Title</p>
+            <p id="from-content">@officialPaper.Content</p>
+            <p id="to-approvement">@officialPaper.displayApprovement()</p>
+            <form asp-action="OfficialPaperApprove" method="post">
+                <input name="id" value="@officialPaper.ID" hidden />
+                <input type="submit" value="同意" />
+            </form>
+            <form asp-action="OfficialPaperNotApprove" method="post">
+                <input name="id" value="@officialPaper.ID" hidden />
+                <input type="submit" value="不同意" />
+            </form>
+        </div>
+    }
+    <br />
+}
+
+<h4>发出</h4>
+
+@foreach (var officialPaper in Model.OfficialPapers) {
+    if (officialPaper.FromEmail == ViewData["UserName"].ToString()) {
+        <div id="to-official-paper">
+            <p id="to-email">@officialPaper.ToEmail</p>
+            <p id="to-time">@officialPaper.Time</p>
+            <p id="to-title">@officialPaper.Title</p>
+            <p id="to-content">@officialPaper.Content</p>
+            <p id="to-approvement">@officialPaper.displayApprovement()</p>
+        </div>
+    }
+    <br />
+}

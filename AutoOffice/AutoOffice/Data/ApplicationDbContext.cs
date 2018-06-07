@@ -14,6 +14,7 @@ namespace AutoOffice.Data
         public DbSet<HumanManage> HumanManages { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<JobRemind> JobReminds { get; set; }
+        public DbSet<OfficialPaper> OfficialPapers { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -28,6 +29,7 @@ namespace AutoOffice.Data
             builder.Entity<HumanManage>().ToTable("HumanManage");
             builder.Entity<Message>().ToTable("Message");
             builder.Entity<JobRemind>().ToTable("JobRemind");
+            builder.Entity<OfficialPaper>().ToTable("OfficialPaper");
 
       // Add your customizations after calling base.OnModelCreating(builder);
     }

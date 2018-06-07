@@ -1,0 +1,49 @@
+﻿@model AutoOffice.Models.HomeViewModels.HumanResourceManageModel
+@{
+    ViewData["Title"] = "OfficialPaper";
+}
+<link href="~/css/message.css" rel="stylesheet" />
+
+<h2>OfficialPaper</h2>
+
+<table>
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            Job
+        </th>
+    </tr>
+    @foreach (var item in Model.HumanManages) {
+        <tr id="message-user-row">
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Department
+            </td>
+            <td>
+                @item.Job
+            </td>
+            <td>
+                <form id="form" asp-action="OfficialPaperWrite" method="post">
+                    <input name="toEmail" value="@item.Email" hidden />
+                    <input type="submit" value="Write Official Paper" />
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+
+<br /><a asp-action="OfficialPaperManage">OfficialPaperManage</a>

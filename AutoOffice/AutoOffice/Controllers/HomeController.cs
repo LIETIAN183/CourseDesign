@@ -222,5 +222,103 @@ namespace AutoOffice.Controllers
 
       return View();
     }
+
+    // MARK: - Official Papers
+    public async Task<IActionResult> OfficialPaper() {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+
+      var model = new HumanResourceManageModel {
+        HumanManages = db.HumanManages
+                                                 .Where(h => h.Email != user.UserName)
+                                                 .ToArray()
+      };
+
+      return View(model);
+    }
+
+    public async Task<IActionResult> OfficialPaperManage() {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+
+      var model = new OfficialPaperModel {
+        OfficialPapers = db.OfficialPapers
+                                                 .Where(h => h.ToEmail == user.UserName || h.FromEmail == user.UserName)
+                                                 .ToArray()
+      };
+
+      ViewData["UserName"] = user.UserName;
+
+      return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> OfficialPaperWrite(string toEmail) {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+      
+      ViewData["ToEmail"] = toEmail;
+
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> OfficialPaperSend(string title, string content, string toEmail) {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+
+      OfficialPaper officialPaper = new OfficialPaper();
+      officialPaper.FromEmail = user.UserName;
+      officialPaper.ToEmail = toEmail;
+      officialPaper.Title = title;
+      officialPaper.Content = content;
+      officialPaper.Time = DateTime.Now;
+      officialPaper.Approvement = (int)ApprovementState.NotDecideYet;
+      db.OfficialPapers.Add(officialPaper);
+      db.SaveChanges();
+
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> OfficialPaperApprove(string id) {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+
+      db.OfficialPapers.Where(p => p.ID == id).First().Approvement = (int)ApprovementState.Approved;
+      db.SaveChanges();
+
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> OfficialPaperNotApprove(string id) {
+      // 验证是否登陆
+      var user = await _userManager.GetUserAsync(User);
+      if (user == null) {
+        throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      }
+
+      db.OfficialPapers.Where(p => p.ID == id).First().Approvement = (int)ApprovementState.NotApproved;
+      db.SaveChanges();
+
+      return View();
+    }
+
   }
 }
