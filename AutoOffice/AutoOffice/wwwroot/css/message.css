@@ -1,6 +1,6 @@
 ﻿#message-user-row td
 {
-    min-width: 10em;
+    min-width: 13em;
 }
 
 
@@ -14,3 +14,12 @@
 }
 
 
+
+#message-input form {
+    align-content: center;
+}
+
+#message-input button {
+    width: 10em;
+    position:center;
+}

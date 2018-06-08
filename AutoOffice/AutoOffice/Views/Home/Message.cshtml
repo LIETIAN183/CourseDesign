@@ -4,6 +4,7 @@
 }
 <link href="~/css/message.css" rel="stylesheet" />
 <h2>Message</h2>
+<hr />
 
 <table>
     <tr>
@@ -38,7 +39,7 @@
             <td>
                 <form id="form" asp-action="MessageDetail" method="post">
                     <input name="toEmail" value="@item.Email" hidden />
-                    <input type="submit" value="Start Message" />
+                    <button type="submit" class="btn btn-primary">Start Message</button>
                 </form>
             </td>
         </tr>

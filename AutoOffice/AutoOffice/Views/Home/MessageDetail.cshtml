@@ -4,6 +4,7 @@
 }
 <link href="~/css/message.css" rel="stylesheet" />
 <h2>@ViewData["Title"]</h2>
+<hr />
 
 <div id="message-detail">
     @foreach (var message in Model.Messages)
@@ -28,8 +29,10 @@
     <div id="message-input">
         <form asp-action="MessageSend" method="post">
             <input name="toEmail" value="@ViewData["toEmail"].ToString()" hidden />
-            <input name="text" placeholder="Edit text to send..." />
-            <input type="submit" value="Send" />
+            <div class="form-group">
+                <input name="text" class="form-control" placeholder="Edit text to send..." />
+            </div>
+            <button type="submit" class="btn btn-success">发送</button>
         </form>
     </div>
 </div>

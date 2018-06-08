@@ -159,6 +159,12 @@ namespace AutoOffice.Controllers
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
+            ViewData["toEmail"] = toEmail;
+
+            if (text == null || text.Trim() == "") {
+              return View();
+            }
             Message message = new Message();
             message.FromEmail = user.UserName;
             message.ToEmail = toEmail;
@@ -166,8 +172,6 @@ namespace AutoOffice.Controllers
             message.Time = DateTime.Now;
             db.Messages.Add(message);
             db.SaveChanges();
-
-            ViewData["toEmail"] = toEmail;
 
             return View();
         }
