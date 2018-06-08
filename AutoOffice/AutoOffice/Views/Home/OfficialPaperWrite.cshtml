@@ -5,16 +5,13 @@
 <link href="~/css/officialPaper.css" rel="stylesheet" />
 
 <h2>OfficialPaperWrite to @ViewData["ToEmail"]</h2>
+<hr />
 
 <form asp-action="OfficialPaperSend" method="post">
     <label for="title">Title</label>
-    <br />
-    <input id="title" name="title" maxlength="50" />
-    <br />
-    <br />
+    <input id="title" class="form-control" name="title" maxlength="50" />
     <label for="official-paper-content">Content</label>
-    <br />
-    <input name="content" id="official-paper-content" maxlength="512" />
+    <textarea id="official-paper-content" cols="2"   rows="6" class="form-control" name="content" ></textarea>
     <input name="toEmail" value="@ViewData["ToEmail"]" hidden />
-    <input type="submit" value="Send" />
+    <button type="submit" class="btn btn-success">发送</button>
 </form>

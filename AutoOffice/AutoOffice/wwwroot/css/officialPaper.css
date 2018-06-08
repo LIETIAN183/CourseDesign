@@ -1,4 +1,6 @@
-﻿#official-paper-content {
-    min-width: 50em;
-    min-height: 20em;
+﻿#title {
+    max-width: 20em;
+}
+
+#official-paper-content {
 }

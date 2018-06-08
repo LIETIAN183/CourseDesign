@@ -5,6 +5,7 @@
 <link href="~/css/message.css" rel="stylesheet" />
 
 <h2>OfficialPaper</h2>
+<hr />
 
 <table>
     <tr>
@@ -38,12 +39,12 @@
             <td>
                 <form id="form" asp-action="OfficialPaperWrite" method="post">
                     <input name="toEmail" value="@item.Email" hidden />
-                    <input type="submit" value="Write Official Paper" />
+                    <button type="submit" class="btn btn-primary">Write Official Paper</button>
                 </form>
             </td>
         </tr>
     }
 </table>
 
-
-<br /><a asp-action="OfficialPaperManage">OfficialPaperManage</a>
+<hr />
+<a asp-action="OfficialPaperManage">OfficialPaperManage</a>

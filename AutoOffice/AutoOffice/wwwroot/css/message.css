@@ -1,8 +1,10 @@
-﻿#message-user-row td
-{
-    min-width: 13em;
+﻿#message-user-row button {
+    margin: 1em;
 }
 
+#message-user-row td {
+    min-width: 13em;
+}
 
 #message-detail {
     margin-left: 10em;
@@ -12,8 +14,6 @@
 #to-time, #to-text {
     text-align: right;
 }
-
-
 
 #message-input form {
     align-content: center;

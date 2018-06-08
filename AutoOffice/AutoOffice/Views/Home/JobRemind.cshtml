@@ -3,30 +3,32 @@
 @{
     ViewData["Title"] = "JobRemind";
 }
+<link href="~/css/jobRemind.css" rel="stylesheet" />
 
 <h2>JobRemind</h2>
+<hr />
 
 <div id="job-remind">
 
     <div id="job-remind-input">
         <form asp-action="JobRemindAdd" method="post">
-            <input name="content" placeholder="specify job..."/>
-            <input type="submit" value="Add" />
+            <input name="content" class="form-control" placeholder="specify job..." />
+            <button type="submit" class="btn btn-primary">添加</button>
         </form>
     </div>
 
+    <hr />
     <h4>未完成</h4>
     @foreach (var jobRemind in Model.JobReminds) {
         if (jobRemind.Finished == false) {
-            <div id="not-finished-job">
-                <p id="job-content">@jobRemind.Content</p>
+            <div id="job-content">
+                @jobRemind.Content
                 <form asp-action="JobRemindFinish" method="post">
-                    <input name="id" value="@jobRemind.ID" hidden/>
-                    <input type="submit" value="Finish" />
+                    <input name="id" value="@jobRemind.ID" hidden />
+                    <button type="submit" class="btn btn-success">标记为已完成</button>
                 </form>
             </div>
         }
-        <br />
     }
 
     <h4>已完成</h4>
@@ -36,7 +38,6 @@
                 <p id="job-content">@jobRemind.Content</p>
             </div>
         }
-        <br />
     }
 
 </div>
