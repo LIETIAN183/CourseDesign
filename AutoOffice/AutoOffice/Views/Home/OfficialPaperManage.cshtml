@@ -7,6 +7,8 @@
 
 <h2>OfficialPaperManage</h2>
 
+<hr />
+
 <h4>收到</h4>
 
 @foreach (var officialPaper in Model.OfficialPapers) {
@@ -17,14 +19,18 @@
             <p id="from-title">@officialPaper.Title</p>
             <p id="from-content">@officialPaper.Content</p>
             <p id="to-approvement">@officialPaper.displayApprovement()</p>
-            <form asp-action="OfficialPaperApprove" method="post">
-                <input name="id" value="@officialPaper.ID" hidden />
-                <input type="submit" value="同意" />
-            </form>
-            <form asp-action="OfficialPaperNotApprove" method="post">
-                <input name="id" value="@officialPaper.ID" hidden />
-                <input type="submit" value="不同意" />
-            </form>
+
+            @if (officialPaper.Approvement == (int)ApprovementState.NotDecideYet) {
+                <form asp-action="OfficialPaperApprove" method="post">
+                    <input name="id" value="@officialPaper.ID" hidden />
+                    <input type="submit" value="同意" />
+                </form>
+                <form asp-action="OfficialPaperNotApprove" method="post">
+                    <input name="id" value="@officialPaper.ID" hidden />
+                    <input type="submit" value="不同意" />
+                </form>
+            }
+
         </div>
     }
     <br />
