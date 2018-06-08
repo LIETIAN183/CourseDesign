@@ -2,9 +2,12 @@
 @{
     ViewData["Title"] = "Human Resource Manage";
 }
+<link href="~/css/humanResource.css" rel="stylesheet" />
 
 <h2>@ViewData["Title"]</h2>
-<br />
+<hr />
+
+
 <div>
     <table>
         <tr>
@@ -21,10 +24,8 @@
                 Job
             </th>
         </tr>
-        @foreach (var item in Model.HumanManages)
-        {
-            if (item.Email == "root@root.com")
-            {
+        @foreach (var item in Model.HumanManages) {
+            if (item.Email == "root@root.com") {
                 continue;
             }
             <tr>
@@ -34,16 +35,16 @@
                     </td>
                     <input name="email" value="@item.Email" hidden />
                     <td>
-                        <input id="name" name="name" value="@item.Name" />
+                        <input id="name" class="form-control" name="name" value="@item.Name" />
                     </td>
                     <td>
-                        <input id="department" name="department" value="@item.Department" />
+                        <input id="department" class="form-control" name="department" value="@item.Department" />
                     </td>
                     <td>
-                        <input id="job" name="job" value="@item.Job" />
+                        <input id="job" class="form-control" name="job" value="@item.Job" />
                     </td>
                     <td>
-                        <input type="submit" />
+                        <button type="submit" class="btn btn-warning">修改</button>
                     </td>
                 </form>
             </tr>
