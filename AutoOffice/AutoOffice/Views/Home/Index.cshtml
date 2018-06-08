@@ -1,17 +1,32 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Auto Office";
 }
 <link href="~/css/index.css" rel="stylesheet" />
+<script src="~/js/index.js"></script>
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
 @if (!ViewData["UserName"].Equals(""))
 {
 <div id="nav-button">
     @if (ViewData["UserName"].ToString() == "root@root.com") {
-        <a asp-action="HumanResourceManage">Manage Human Resource</a>
+        <form asp-action="HumanResourceManage">
+            <button type="submit" class="btn btn-default">HumanResourceManage</button>
+        </form>
     }
+    <form asp-action="Message">
+        <button type="submit" class="btn btn-default">Message</button>
+    </form>
+    <form asp-action="JobRemind">
+        <button type="submit" class="btn btn-default">JobRemind</button>
+    </form>
+    <form asp-action="OfficialPaper">
+        <button type="submit" class="btn btn-default">OfficialPaper</button>
+    </form>
 
-    <br /><a asp-action="Message">Message</a>
-    <br /><a asp-action="JobRemind">JobRemind</a>
-    <br /><a asp-action="OfficialPaper">OfficialPaper</a>
+
 </div>
 }
 else
