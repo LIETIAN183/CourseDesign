@@ -13,40 +13,38 @@
 
 @foreach (var officialPaper in Model.OfficialPapers) {
     if (officialPaper.ToEmail == ViewData["UserName"].ToString()) {
-        <div id="from-official-paper">
-            <p id="from-email">@officialPaper.FromEmail</p>
-            <p id="from-time">@officialPaper.Time</p>
-            <p id="from-title">@officialPaper.Title</p>
-            <p id="from-content">@officialPaper.Content</p>
-            <p id="to-approvement">@officialPaper.displayApprovement()</p>
+<div id="official-paper">
+    <p id="title">@officialPaper.Title</p>
+    <p id="content">@officialPaper.Content</p>
+    <p id="email">来自：@officialPaper.FromEmail</p>
+    <p id="time">@officialPaper.Time</p>
+    <p id="approvement">状态：@officialPaper.displayApprovement()</p>
 
-            @if (officialPaper.Approvement == (int)ApprovementState.NotDecideYet) {
-                <form asp-action="OfficialPaperApprove" method="post">
-                    <input name="id" value="@officialPaper.ID" hidden />
-                    <input type="submit" value="同意" />
-                </form>
-                <form asp-action="OfficialPaperNotApprove" method="post">
-                    <input name="id" value="@officialPaper.ID" hidden />
-                    <input type="submit" value="不同意" />
-                </form>
-            }
-
-        </div>
+    @if (officialPaper.Approvement == (int)ApprovementState.NotDecideYet) {
+        <form asp-action="OfficialPaperApprove" method="post">
+            <input name="id" value="@officialPaper.ID" hidden />
+            <button type="submit" class="btn btn-success">同意</button>
+        </form>
+        <form asp-action="OfficialPaperNotApprove" method="post">
+            <input name="id" value="@officialPaper.ID" hidden />
+            <button type="submit" class="btn btn-danger">不同意</button>
+        </form>
     }
-    <br />
-}
 
+</div>
+    }
+}
+<hr/>
 <h4>发出</h4>
 
 @foreach (var officialPaper in Model.OfficialPapers) {
     if (officialPaper.FromEmail == ViewData["UserName"].ToString()) {
-        <div id="to-official-paper">
-            <p id="to-email">@officialPaper.ToEmail</p>
-            <p id="to-time">@officialPaper.Time</p>
-            <p id="to-title">@officialPaper.Title</p>
-            <p id="to-content">@officialPaper.Content</p>
-            <p id="to-approvement">@officialPaper.displayApprovement()</p>
-        </div>
+<div id="official-paper">
+    <p id="title">@officialPaper.Title</p>
+    <p id="content">@officialPaper.Content</p>
+    <p id="email">发到：@officialPaper.ToEmail</p>
+    <p id="time">@officialPaper.Time</p>
+    <p id="approvement">状态：@officialPaper.displayApprovement()</p>
+</div>
     }
-    <br />
 }
