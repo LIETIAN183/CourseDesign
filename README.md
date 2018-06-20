@@ -2,10 +2,7 @@
 ## 软件工程课程设计
 ##### 无纸化办公系统
 
-* [可行性分析报告](/docs/FeasibilityAnalysis.md)
-* [需求分析报告](/docs/RequirementAnalysis.md)
-* [工作日志](/docs/worklog.md)  -  每周六更新
-
+* [工作日志](/docs/worklog.txt)  
 
 
 
