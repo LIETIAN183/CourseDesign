@@ -9,25 +9,25 @@
 
 <hr />
 
-<h4>收到</h4>
+<h4>Received</h4>
 
 @foreach (var officialPaper in Model.OfficialPapers) {
     if (officialPaper.ToEmail == ViewData["UserName"].ToString()) {
 <div id="official-paper">
     <p id="title">@officialPaper.Title</p>
     <p id="content">@officialPaper.Content</p>
-    <p id="email">来自：@officialPaper.FromEmail</p>
+    <p id="email">From：@officialPaper.FromEmail</p>
     <p id="time">@officialPaper.Time</p>
-    <p id="approvement">状态：@officialPaper.displayApprovement()</p>
+    <p id="approvement">State：@officialPaper.displayApprovement()</p>
 
     @if (officialPaper.Approvement == (int)ApprovementState.NotDecideYet) {
         <form asp-action="OfficialPaperApprove" method="post">
             <input name="id" value="@officialPaper.ID" hidden />
-            <button type="submit" class="btn btn-success">同意</button>
+            <button type="submit" class="btn btn-success">Agree</button>
         </form>
         <form asp-action="OfficialPaperNotApprove" method="post">
             <input name="id" value="@officialPaper.ID" hidden />
-            <button type="submit" class="btn btn-danger">不同意</button>
+            <button type="submit" class="btn btn-danger">Disagree</button>
         </form>
     }
 
@@ -35,16 +35,16 @@
     }
 }
 <hr/>
-<h4>发出</h4>
+<h4>Send</h4>
 
 @foreach (var officialPaper in Model.OfficialPapers) {
     if (officialPaper.FromEmail == ViewData["UserName"].ToString()) {
 <div id="official-paper">
     <p id="title">@officialPaper.Title</p>
     <p id="content">@officialPaper.Content</p>
-    <p id="email">发到：@officialPaper.ToEmail</p>
+    <p id="email">To：@officialPaper.ToEmail</p>
     <p id="time">@officialPaper.Time</p>
-    <p id="approvement">状态：@officialPaper.displayApprovement()</p>
+    <p id="approvement">State：@officialPaper.displayApprovement()</p>
 </div>
     }
 }

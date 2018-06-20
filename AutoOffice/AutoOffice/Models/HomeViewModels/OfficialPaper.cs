@@ -23,11 +23,11 @@ namespace AutoOffice.Models.HomeViewModels {
     public string displayApprovement() {
       switch(Approvement) {
         case (int)ApprovementState.NotDecideYet:
-          return "未被处理";
+          return "Not Decide Yet";
         case (int)ApprovementState.Approved:
-          return "通过";
+          return "Agreed";
         case (int)ApprovementState.NotApproved:
-          return "未通过";
+          return "Disagreed";
       }
       return "发生错误";
     }
